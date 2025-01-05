@@ -3,25 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me</title>
+    <title>PixelPlace Multiplayer</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
 </head>
 <body>
-    <div class="about-container">
-        <div class="profile-picture">
-            <img src="profile/4485111fac6de507ce602afcd6870448.png" alt="Profile Picture">
-        </div>
-        <h1>ctr495</h1>
-        <div class="social-links">
-            <div class="profile-card">
-                <img src="profile/4485111fac6de507ce602afcd6870448.png" alt="Profile Picture">
-                <p><strong>ctr_team495.</strong> 😬...</p>
+    <header>
+        <nav>
+            <h1>PixelPlace Multiplayer</h1>
+            <div id="auth-section">
+                <button id="discord-login">Sign up with Discord</button>
             </div>
-            <div class="icons">
-                <a href="https://www.youtube.com" target="_blank"><img src="youtube/youtube-icon.png" alt="YouTube"></a>
-                <a href="https://www.roblox.com" target="_blank"><img src="roblox/roblox-icon.png" alt="Roblox"></a>
-            </div>
-        </div>
-    </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="canvas-section">
+            <div id="canvas-container"></div>
+        </section>
+
+        <section id="tools-section">
+            <h2>Tools</h2>
+            <div class="tool" id="pencil">Pencil</div>
+            <div class="tool" id="eraser">Eraser</div>
+            <div class="tool" id="color-picker">Color Picker</div>
+            <input type="color" id="color-selector">
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 PixelPlace Multiplayer</p>
+        <p>Created by [CTR]</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
