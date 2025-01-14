@@ -29,58 +29,25 @@
             font-size: 18px;
             font-weight: bold;
         }
-        .g-recaptcha {
-            margin: 20px 0;
-        }
     </style>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <h1>CMD X Key Generator</h1>
-    <div id="form">
-        <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
-        <button onclick="submitForm()">Generate Key</button>
-    </div>
+    <button onclick="generateKey()">Generate Key</button>
     <div class="key-output" id="keyOutput"></div>
 
     <script>
-        const BACKEND_URL = "https://cmd-x-backend.up.railway.app";
-
-        document.getElementById("generate-btn").addEventListener("click", async () => {
-        const recaptchaResponse = grecaptcha.getResponse();
-        
-        if (!recaptchaResponse) {
-            alert("Please complete the reCAPTCHA.");
-            return;
-        }
-        
-        try {
-            const verifyResponse = await fetch(`${BACKEND_URL}/verify_recaptcha`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ recaptcha_response: recaptchaResponse }),
-            });
-        
-            const verifyResult = await verifyResponse.json();
-            if (!verifyResult.success) {
-                alert("reCAPTCHA verification failed. Please try again.");
-                return;
+        function generateKey() {
+            const segments = [];
+            for (let i = 0; i < 5; i++) {
+                segments.push(
+                    Math.random().toString(16).substring(2, 8).toUpperCase()
+                );
             }
-        
-            const keyResponse = await fetch(`${BACKEND_URL}/generate_key`);
-            const keyResult = await keyResponse.json();
-        
-            if (keyResult.success) {
-                document.getElementById("key-display").innerText = `Your Key: ${keyResult.key}`;
-            } else {
-                alert("Failed to generate key. Please try again.");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred. Please try again later.");
+            const key = `CMD-X-${segments.join('-')}`;
+            document.getElementById('keyOutput').textContent = `Generated Key: ${key}`;
+            // TODO: Send this key to the server for storage
         }
-        });
-
     </script>
 </body>
 </html>
