@@ -44,29 +44,43 @@
     <div class="key-output" id="keyOutput"></div>
 
     <script>
-        function submitForm() {
-            const captchaResponse = grecaptcha.getResponse();
-            if (!captchaResponse) {
-                alert("Please complete the reCAPTCHA!");
-                return;
-            }
+        const BACKEND_URL = "https://cmd-x-backend.up.railway.app";
 
-            // Send captchaResponse to the server for verification
-            fetch("/generate-key", {
+        document.getElementById("generate-btn").addEventListener("click", async () => {
+        const recaptchaResponse = grecaptcha.getResponse();
+        
+        if (!recaptchaResponse) {
+            alert("Please complete the reCAPTCHA.");
+            return;
+        }
+        
+        try {
+            const verifyResponse = await fetch(`${BACKEND_URL}/verify_recaptcha`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ captcha: captchaResponse }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.valid) {
-                        document.getElementById("keyOutput").textContent = `Generated Key: ${data.key}`;
-                    } else {
-                        alert("Failed to validate reCAPTCHA. Try again.");
-                    }
-                })
-                .catch(() => alert("Error connecting to the server."));
+                body: JSON.stringify({ recaptcha_response: recaptchaResponse }),
+            });
+        
+            const verifyResult = await verifyResponse.json();
+            if (!verifyResult.success) {
+                alert("reCAPTCHA verification failed. Please try again.");
+                return;
+            }
+        
+            const keyResponse = await fetch(`${BACKEND_URL}/generate_key`);
+            const keyResult = await keyResponse.json();
+        
+            if (keyResult.success) {
+                document.getElementById("key-display").innerText = `Your Key: ${keyResult.key}`;
+            } else {
+                alert("Failed to generate key. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again later.");
         }
+        });
+
     </script>
 </body>
 </html>
