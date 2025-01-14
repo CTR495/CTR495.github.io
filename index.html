@@ -3,40 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelPlace Multiplayer</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="favicon.ico">
-    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <title>CMD X Key Generator</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            background-color: #3a3a3a;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #555555;
+        }
+        .key-output {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .g-recaptcha {
+            margin: 20px 0;
+        }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>PixelPlace Multiplayer</h1>
-            <div id="auth-section">
-                <button id="discord-login">Sign up with Discord</button>
-            </div>
-        </nav>
-    </header>
+    <h1>CMD X Key Generator</h1>
+    <div id="form">
+        <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+        <button onclick="submitForm()">Generate Key</button>
+    </div>
+    <div class="key-output" id="keyOutput"></div>
 
-    <main>
-        <section id="canvas-section">
-            <div id="canvas-container"></div>
-        </section>
+    <script>
+        function submitForm() {
+            const captchaResponse = grecaptcha.getResponse();
+            if (!captchaResponse) {
+                alert("Please complete the reCAPTCHA!");
+                return;
+            }
 
-        <section id="tools-section">
-            <h2>Tools</h2>
-            <div class="tool" id="pencil">Pencil</div>
-            <div class="tool" id="eraser">Eraser</div>
-            <div class="tool" id="color-picker">Color Picker</div>
-            <input type="color" id="color-selector">
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 PixelPlace Multiplayer</p>
-        <p>Created by [CTR]</p>
-    </footer>
-
-    <script src="script.js"></script>
+            // Send captchaResponse to the server for verification
+            fetch("/generate-key", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ captcha: captchaResponse }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.valid) {
+                        document.getElementById("keyOutput").textContent = `Generated Key: ${data.key}`;
+                    } else {
+                        alert("Failed to validate reCAPTCHA. Try again.");
+                    }
+                })
+                .catch(() => alert("Error connecting to the server."));
+        }
+    </script>
 </body>
 </html>
