@@ -3,70 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMD X Key Generator</title>
-    <style>
-        body {
-            background: url('peakpx.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        .title {
-            font-size: 60px;
-            font-weight: bold;
-            margin: 0;
-            padding: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .info {
-            font-size: 20px;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        button {
-            background-color: #3a3a3a;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #555555;
-        }
-        .key-output {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
+    <title>Under Maintenance</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1 class="title">Nexus UI</h1>
-    <p class="info">
-        Welcome to Nexus UI – The Key Generator For Unlocking Nexus UI 
-    </p>
-    
-    <h2>Nexus UI Key Generator</h2>
-    <button onclick="generateKey()">Generate Key</button>
-    <div class="key-output" id="keyOutput"></div>
+    <div class="container">
+        <h1>🚧 Under Maintenance 🚧</h1>
+        <p>We are working on something amazing! Stay tuned.</p>
+        
+        <div id="countdown">
+            <div class="time-box">
+                <span id="days">00</span>
+                <p>Days</p>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <p>Hours</p>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <p>Seconds</p>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        function generateKey() {
-            const segments = [];
-            for (let i = 0; i < 5; i++) {
-                segments.push(
-                    Math.random().toString(16).substring(2, 8).toUpperCase()
-                );
-            }
-            const key = `Nexus-UI-${segments.join('-')}`;
-            document.getElementById('keyOutput').textContent = `Generated Key: ${key}`;
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
