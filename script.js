@@ -1,5 +1,5 @@
 // Set the date for when the maintenance will end
-const endDate = new Date("October 2, 2025 12:00:00").getTime();
+const endDate = new Date("October 2, 2025 13:00:00").getTime();
 
 const countdownFunction = setInterval(() => {
     const now = new Date().getTime();
