@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Under Maintenance</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        #main-content {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+
+    <!-- CAPTCHA first -->
+    <div id="captcha-container">
+        <form id="captcha-form">
+            <div class="g-recaptcha" 
+                 data-sitekey="6LcskhIrAAAAALmn5Ltb7QDk2PVPo9hn-KbiEW2M" 
+                 data-callback="onCaptchaSuccess">
+            </div>
+        </form>
+    </div>
+
+    <!-- Hidden main content -->
+    <div id="main-content" class="container">
         <h1>🚧 Under Maintenance 🚧</h1>
         <p>We are working on something amazing! Stay tuned.</p>
         
@@ -32,5 +50,13 @@
     </div>
 
     <script src="script.js"></script>
+
+    <script>
+        // Called by reCAPTCHA on success
+        function onCaptchaSuccess() {
+            document.getElementById('captcha-container').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
