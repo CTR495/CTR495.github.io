@@ -7,16 +7,30 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
-        #main-content {
+        #main-content, #captcha-container {
             display: none;
+        }
+
+        #loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-size: 1.5rem;
+            font-family: Arial, sans-serif;
+            animation: fadeIn 1.5s ease-in-out;
         }
     </style>
 </head>
 <body>
 
-    <!-- CAPTCHA first -->
+    <!-- Initial Loader -->
+    <div id="loader">Loading, please wait...</div>
+
+    <!-- CAPTCHA -->
     <div id="captcha-container">
-        <form id="captcha-form">
+        <form id="captcha-form" aria-label="CAPTCHA verification form">
             <div class="g-recaptcha" 
                  data-sitekey="6LcskhIrAAAAALmn5Ltb7QDk2PVPo9hn-KbiEW2M" 
                  data-callback="onCaptchaSuccess">
@@ -24,12 +38,24 @@
         </form>
     </div>
 
-    <!-- Hidden main content -->
-    <div id="main-content" class="container">
-        <h1>🚧 Under Maintenance 🚧</h1>
-        <p>We are working on something amazing! Stay tuned.</p>
-        
-        <div id="countdown">
+    <!-- Suggestion Box -->
+    <div id="suggestion-toggle" onclick="toggleSuggestionBox()">💡 Suggest an Idea</div>
+
+    <div id="suggestion-box" class="container hidden">
+        <h2>Have an idea for this website?</h2>
+        <p>Share it with the owner!</p>
+        <textarea id="idea-text" placeholder="Type your idea here..."></textarea>
+        <button onclick="submitIdea()">Send</button>
+        <p id="suggestion-status"></p>
+    </div>
+
+
+    <!-- Main content -->
+    <main id="main-content" class="container" role="main">
+        <h1 aria-live="polite">🚧 Under Maintenance 🚧</h1>
+        <p>We're upgrading our experience. Please check back soon!</p>
+
+        <section id="countdown" aria-label="Countdown timer">
             <div class="time-box">
                 <span id="days">00</span>
                 <p>Days</p>
@@ -46,16 +72,43 @@
                 <span id="seconds">00</span>
                 <p>Seconds</p>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <!-- Notify Form -->
+        <section id="notify-section" aria-label="Notify me">
+            <p>Want to be notified when we're back?</p>
+            <form id="notify-form" onsubmit="handleNotify(event)">
+                <input type="email" id="email" placeholder="Your email" required />
+                <button type="submit">Notify Me</button>
+            </form>
+            <p id="notify-msg" style="margin-top: 10px;"></p>
+        </section>
+
+        <!-- Animated Emoji -->
+        <div class="emoji-wave" aria-hidden="true">👷‍♂️🔧💻✨</div>
+    </main>
 
     <script src="script.js"></script>
 
     <script>
-        // Called by reCAPTCHA on success
+        // Loader transition
+        window.addEventListener("load", () => {
+            document.getElementById("loader").style.display = 'none';
+            document.getElementById("captcha-container").style.display = 'block';
+        });
+
+        // reCAPTCHA callback
         function onCaptchaSuccess() {
             document.getElementById('captcha-container').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
+        }
+
+        // Handle email submit
+        function handleNotify(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            document.getElementById('notify-msg').textContent = `Thank you! We’ll notify you at ${email}.`;
+            e.target.reset();
         }
     </script>
 </body>
