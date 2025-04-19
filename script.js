@@ -21,3 +21,44 @@ const countdownFunction = setInterval(() => {
     document.getElementById("minutes").innerText = minutes.toString().padStart(2, "0");
     document.getElementById("seconds").innerText = seconds.toString().padStart(2, "0");
 }, 1000);
+
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1363135172576411790/I1nprDXLfw7S8WZrkEu2hO8Ke2YT7R8rhylosSQXHWTLQcJjz3vZ0-IDesv3lnYDHaps";
+
+function toggleSuggestionBox() {
+    const box = document.getElementById("suggestion-box");
+    box.classList.toggle("hidden");
+}
+
+function submitIdea() {
+    const idea = document.getElementById("idea-text").value.trim();
+    const status = document.getElementById("suggestion-status");
+
+    if (!idea) {
+        status.textContent = "Please enter an idea before sending.";
+        return;
+    }
+
+    // Send idea to Discord webhook
+    fetch(DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            content: `📝 New Website Suggestion:\n${idea}`
+        }),
+    })
+    .then(res => {
+        if (res.ok) {
+            status.textContent = "✅ Suggestion sent successfully!";
+            document.getElementById("idea-text").value = "";
+        } else {
+            status.textContent = "❌ Failed to send. Try again later.";
+        }
+    })
+    .catch(err => {
+        console.error("Error sending suggestion:", err);
+        status.textContent = "❌ Error sending. Check your connection.";
+    });
+}
+
