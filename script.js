@@ -1,4 +1,3 @@
-// Set the date for when the maintenance will end
 const endDate = new Date("October 2, 2025 13:00:00").getTime();
 
 const countdownFunction = setInterval(() => {
@@ -23,9 +22,10 @@ const countdownFunction = setInterval(() => {
         seconds: document.getElementById("seconds"),
     };
 
-    Object.keys(timeElements).forEach((unit) => {
-        timeElements[unit].innerText = String(Math.floor(timeLeft / (1000 * 60 * 60 * 24 * 60 * 60 * 60 / (60 * 60 * 24 * 60 * 60 * 60 / (60 * 60 * 24 * 60 * 60 / (60 * 60 * 24 * 60 / (60 * 60 * 24 / (60 * 60 / 60))))))).padStart(2, "0"));
-    });
+    timeElements.days.textContent = `${days} day${days > 1 ? 's' : ''}`;
+    timeElements.hours.textContent = `${hours.toString().padStart(2, '0')} hour${hours > 1 ? 's' : ''}`;
+    timeElements.minutes.textContent = `${minutes.toString().padStart(2, '0')} minute${minutes > 1 ? 's' : ''}`;
+    timeElements.seconds.textContent = `${seconds.toString().padStart(2, '0')} second${seconds > 1 ? 's' : ''}`;
 }, 1000);
 
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1363135172576411790/I1nprDXLfw7S8WZrkEu2hO8Ke2YT7R8rhylosSQXHWTLQcJjz3vZ0-IDesv3lnYDHaps";
@@ -40,20 +40,23 @@ function submitIdea() {
     const idea = document.getElementById("idea-text").value.trim();
     const status = document.getElementById("suggestion-status");
 
-    if (!idea) {
-        status.textContent = "Please enter an idea before sending.";
+    if (!idea || !name) {
+        status.textContent = "Please enter both name and idea before sending.";
         return;
     }
 
     // Send idea to Discord webhook
+    const payload = {
+        username: "Suggestion Bot",
+        content: `📝 **${name}** submitted an idea:\n${idea}`,
+    };
+
     fetch(DISCORD_WEBHOOK_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            content: `📝 New Website Suggestion:\n${idea} - ${name}`
-        }),
+        body: JSON.stringify(payload),
     })
     .then(res => {
         if (res.ok) {
@@ -61,7 +64,7 @@ function submitIdea() {
             document.getElementById("idea-text").value = "";
             document.getElementById("name-input").value = "";
         } else {
-            status.textContent = "❌ Failed to send. Try again later.";
+            status.textContent = `❌ Failed to send. Status code: ${res.status}`;
         }
     })
     .catch(err => {
