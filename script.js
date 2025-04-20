@@ -1,3 +1,4 @@
+// Set the date for when the maintenance will end
 const endDate = new Date("October 2, 2025 13:00:00").getTime();
 
 const countdownFunction = setInterval(() => {
@@ -15,17 +16,10 @@ const countdownFunction = setInterval(() => {
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    const timeElements = {
-        days: document.getElementById("days"),
-        hours: document.getElementById("hours"),
-        minutes: document.getElementById("minutes"),
-        seconds: document.getElementById("seconds"),
-    };
-
-    timeElements.days.textContent = `${days} day${days > 1 ? 's' : ''}`;
-    timeElements.hours.textContent = `${hours.toString().padStart(2, '0')} hour${hours > 1 ? 's' : ''}`;
-    timeElements.minutes.textContent = `${minutes.toString().padStart(2, '0')} minute${minutes > 1 ? 's' : ''}`;
-    timeElements.seconds.textContent = `${seconds.toString().padStart(2, '0')} second${seconds > 1 ? 's' : ''}`;
+    document.getElementById("days").innerText = days.toString().padStart(2, "0");
+    document.getElementById("hours").innerText = hours.toString().padStart(2, "0");
+    document.getElementById("minutes").innerText = minutes.toString().padStart(2, "0");
+    document.getElementById("seconds").innerText = seconds.toString().padStart(2, "0");
 }, 1000);
 
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1363135172576411790/I1nprDXLfw7S8WZrkEu2hO8Ke2YT7R8rhylosSQXHWTLQcJjz3vZ0-IDesv3lnYDHaps";
