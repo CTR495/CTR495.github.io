@@ -44,11 +44,11 @@
     <div id="suggestion-box" class="container hidden">
         <h2>Have an idea for this website?</h2>
         <p>Share it with the owner!</p>
+        <input id="name-input" type="text" placeholder="Type your name here...">
         <textarea id="idea-text" placeholder="Type your idea here..."></textarea>
         <button onclick="submitIdea()">Send</button>
         <p id="suggestion-status"></p>
     </div>
-
 
     <!-- Main content -->
     <main id="main-content" class="container" role="main">
@@ -76,27 +76,4 @@
     </main>
 
     <script src="script.js"></script>
-
-    <script>
-        // Loader transition
-        window.addEventListener("load", () => {
-            document.getElementById("loader").style.display = 'none';
-            document.getElementById("captcha-container").style.display = 'block';
-        });
-
-        // reCAPTCHA callback
-        function onCaptchaSuccess() {
-            document.getElementById('captcha-container').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-        }
-
-        // Handle email submit
-        function handleNotify(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            document.getElementById('notify-msg').textContent = `Thank you! We’ll notify you at ${email}.`;
-            e.target.reset();
-        }
-    </script>
-</body>
 </html>
