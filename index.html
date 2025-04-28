@@ -75,5 +75,41 @@
         </section>
     </main>
 
-    <script src="script.js"></script>
+    <!-- Scripts -->
+    <script>
+        // Simulate loading then show CAPTCHA
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('captcha-container').style.display = 'block';
+            }, 2000); // Adjust loading time if needed
+        };
+
+        // This function is called when CAPTCHA is successful
+        function onCaptchaSuccess() {
+            document.getElementById('captcha-container').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function toggleSuggestionBox() {
+            const box = document.getElementById('suggestion-box');
+            box.classList.toggle('hidden');
+        }
+
+        function submitIdea() {
+            const name = document.getElementById('name-input').value;
+            const idea = document.getElementById('idea-text').value;
+            const status = document.getElementById('suggestion-status');
+            
+            if (name.trim() && idea.trim()) {
+                status.innerText = "Thank you for your suggestion!";
+                status.style.color = "green";
+            } else {
+                status.innerText = "Please fill out both fields.";
+                status.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
 </html>
