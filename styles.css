@@ -166,3 +166,21 @@ p {
     background-color: #e69500;
 }
 
+#beta-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #724caf;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+#beta-button:hover {
+    background-color: #45a049;
+}
