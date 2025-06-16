@@ -50,6 +50,8 @@
         <p id="suggestion-status"></p>
     </div>
 
+    <!-- Beta Button -->
+    <div id="beta-button" onclick="goToBetaPreview()">🔍 Preview Beta</div>
     <!-- Main content -->
     <main id="main-content" class="container" role="main">
         <h1 aria-live="polite">🚧 Under Maintenance 🚧</h1>
@@ -108,6 +110,10 @@
                 status.innerText = "Please fill out both fields.";
                 status.style.color = "red";
             }
+        }
+
+        function goToBetaPreview() {
+            window.location.href = '/beta/index.html';
         }
     </script>
 
