@@ -22,7 +22,7 @@ const countdownFunction = setInterval(() => {
     document.getElementById("seconds").innerText = seconds.toString().padStart(2, "0");
 }, 1000);
 
-const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1385155762028019742/0ieDk_u31x_hxKpWApAwRXTV8twAYuv6jfd3K7tG4ydNbpPYiwKdf9GRYIKHYbcH85a6";
+const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1386517300701691905/9GfJhjc7SQIphtzs9v1dVQeHnlej0S-8LcWKhYgIlv0UWH7YfgtJlU6RCbxEEH09S220";
 
 function toggleSuggestionBox() {
     const box = document.getElementById("suggestion-box");
