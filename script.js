@@ -22,18 +22,13 @@ const countdownFunction = setInterval(() => {
     document.getElementById("seconds").innerText = seconds.toString().padStart(2, "0");
 }, 1000);
 
-// Original Discord webhook URL
 const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1386517300701691905/9GfJhjc7SQIphtzs9v1dVQeHnlej0S-8LcWKhYgIlv0UWH7YfgtJlU6RCbxEEH09S220";
 
-// Encode the webhook URL in Base64
-const encodedWebhookURL = btoa(DISCORD_WEBHOOK_URL);
-
-// Function to decode the webhook URL
-function getDecodedWebhookURL() {
-    return atob(encodedWebhookURL);
+function toggleSuggestionBox() {
+    const box = document.getElementById("suggestion-box");
+    box.classList.toggle("hidden");
 }
 
-// Example usage in submitIdea function
 function submitIdea() {
     const name = document.getElementById("name-input").value.trim();
     const idea = document.getElementById("idea-text").value.trim();
@@ -50,7 +45,7 @@ function submitIdea() {
         content: `📝 **${name}** submitted an idea:\n${idea}`,
     };
 
-    fetch(getDecodedWebhookURL(), {  // Use the decoded URL here
+    fetch(DISCORD_WEBHOOK_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
