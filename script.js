@@ -6,7 +6,7 @@ const countdownFunction = setInterval(() => {
     const timeLeft = endDate - now;
 
     if (timeLeft < 0) {
-        document.getElementById("countdown").innerHTML = "We're back online!";
+        document.getElementById("countdown").innerHTML = "Updating soon...";
         clearInterval(countdownFunction);
         return;
     }
